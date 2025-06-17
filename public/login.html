@@ -1,78 +1,136 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/styles - login.css">
+    <title>Login - CollectExpress</title>
+	<link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/styles-login.css">
+    
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <img src="/imagens/logo.png" alt="Logo CollectExpress">
-        </div>
-        <nav id="main-nav"></nav>
-    </header>
 
-    <main>
-        <div class="container_login">
-            <h2>Login</h2>
-            <form id="login-form">
-                <div class="input-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="input-group">
-                    <label for="senha">Senha</label>
-                    <input type="password" id="senha" name="senha" required>
-                </div>
-                <div class="input-group">
-                    <label for="userType">Tipo de Conta</label>
-                    <select id="userType" name="userType">
-                        <option value="cliente">Cliente</option>
-                        <option value="cacambeiro">Cacambeiro</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn">Entrar</button>
-                <div id="error-message" class="error-message"></div>
-            </form>
-            <p>Não tem uma conta? <a href="/cadastro">Cadastre-se</a></p>
-        </div>
-    </main>
+    <div class="container_login">
+        <h1>Login</h1>
+        <form id="login-form">
+            <div class="form-group user-type">
+                <label>
+                    <input type="radio" name="tipo_usuario" value="cliente" checked> Cliente
+                </label>
+                <label>
+                    <input type="radio" name="tipo_usuario" value="cacambeiro"> Cacambeiro
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" required>
+            </div>
+            <button type="submit">Entrar</button>
+        </form>
+        <div id="message-container" class="message"></div>
+    </div>
 
-    <footer>
-        <p>&copy; 2025 CollectExpress. Todos os direitos reservados.</p>
-    </footer>
-
-    <script src="/js/auth.js"></script>
     <script>
-        document.getElementById('login-form').addEventListener('submit', async (event) => {
-            event.preventDefault();
+        document.getElementById('login-form').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+
             const form = event.target;
             const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
-            const errorMessageDiv = document.getElementById('error-message');
+            const data = Object.fromEntries(formData.entries()); // Converte os dados do formulário para um objeto
+
+            const messageContainer = document.getElementById('message-container');
+            messageContainer.textContent = ''; // Limpa mensagens anteriores
 
             try {
-                const response = await fetch('/api/users/login', {
+                const response = await fetch('/users/login', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify(data)
                 });
 
                 const result = await response.json();
 
                 if (response.ok) {
-                    errorMessageDiv.textContent = '';
-                    window.location.href = result.redirectUrl || '/servicos';
+                    // Se o login for bem-sucedido, redireciona para a página de perfil
+                    messageContainer.style.color = 'green';
+                    messageContainer.textContent = result.message;
+                    window.location.href = result.redirectUrl;
                 } else {
-                    errorMessageDiv.textContent = result.message || 'Erro ao fazer login.';
+                    // Se houver erro, exibe a mensagem
+                    messageContainer.style.color = 'red';
+                    messageContainer.textContent = result.message || 'Ocorreu um erro.';
                 }
             } catch (error) {
-                errorMessageDiv.textContent = 'Erro de conexão. Tente novamente.';
+                messageContainer.style.color = 'red';
+                messageContainer.textContent = 'Erro de conexão. Tente novamente.';
+                console.error('Erro no fetch:', error);
             }
         });
     </script>
+
+	<footer class="footer_pre">
+		<div class="footer_content">
+			<div>
+				<h3>CONTATO</h3>
+				<ul>
+					<li>collectexpress.app@outlook.com</li>
+					<li>collectexpress_instagram</li>
+					<li>collectexpress_tiktok</li>
+					<li>collectexpress_seilaoq</li>
+					<li>(11) 99999-9999</li>
+				</ul>
+			</div>
+	
+			<div>
+				<h3>DESENVOLVEDORES</h3>
+				<ul>
+					<li>Anna Carolina De Azevedo Leite</li>
+					<li>Gabriel de Andrade Ferreira</li>
+					<li>Giulia Caroline Claro</li>
+					<li>Leonardo Dias Dos Santos</li>
+					<li>Pedro Henrique Batista Dos Santos</li>
+				</ul>
+			</div>
+	
+			<div>
+				<h3>ACOMPANHE-NOS</h3>
+				<ul>
+					<li>github.com/annacarolinaa</li>
+					<li>github.com/biel388</li>
+					<li>github.com/GiuCaroline</li>
+					<li>github.com/Leo-Santoss</li>
+					<li>github.com/pedrosantos664</li>
+				</ul>
+			</div>
+		</div>
+	
+		<p>
+			CollectExpress® 2024
+		</p>
+	</footer>
+	<script>
+		function redirecionar() {
+			const select = document.getElementById('tipo');
+			const valorSelecionado = select.value;
+		
+			let url;
+			if (valorSelecionado === 'cliente') {
+				url = 'logincliente.php'; // URL para Cliente
+			} else if (valorSelecionado === 'cacambeiro') {
+				url = 'logincacambeiro.php'; // URL para Caçambeiro
+			}
+		
+			if (url) {
+				window.location.href = url; // Redireciona para a URL correspondente
+			}
+		}
+		</script>
 </body>
+
 </html>
