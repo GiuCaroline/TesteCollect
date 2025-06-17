@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho - CollectExpress</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+         <div class="logo">
+            <img src="/imagens/logo.png" alt="Logo CollectExpress">
+        </div>
+        <nav id="main-nav"></nav>
+    </header>
+
+    <main>
+        <h2>Meu Carrinho</h2>
+        <div class="cart-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Preço</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody id="cart-items-body">
+                    </tbody>
+            </table>
+            <div class="cart-summary">
+                <p>Total: <span id="cart-total">R$ 0,00</span></p>
+                <button class="btn" id="checkout-btn">Finalizar Pedido</button>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 CollectExpress. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="/js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', renderCart);
+
+        async function renderCart() {
+            const response = await fetch('/api/cart');
+            const items = await response.json();
+            const cartBody = document.getElementById('cart-items-body');
+            const cartTotalSpan = document.getElementById('cart-total');
+            let total = 0;
+
+            cartBody.innerHTML = ''; // Limpa o carrinho
+
+            if (items.length === 0) {
+                cartBody.innerHTML = '<tr><td colspan="3">Seu carrinho está vazio.</td></tr>';
+                document.getElementById('checkout-btn').disabled = true;
+            } else {
+                items.forEach(item => {
+                    const itemTotal = parseFloat(item.preco_aluguel_cacamba);
+                    total += itemTotal;
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${item.nome_empresa} - ${item.tipo_cacamba}</td>
+                        <td>R$ ${itemTotal.toFixed(2).replace('.', ',')}</td>
+                        <td><button onclick="removerDoCarrinho(${item.id_cacamba})">Remover</button></td>
+                    `;
+                    cartBody.appendChild(row);
+                });
+                document.getElementById('checkout-btn').disabled = false;
+            }
+
+            cartTotalSpan.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        }
+
+        async function removerDoCarrinho(cacambaId) {
+            await fetch('/api/cart/remove', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ cacambaId })
+            });
+            renderCart(); // Re-renderiza o carrinho para mostrar a atualização
+        }
+
+        document.getElementById('checkout-btn').addEventListener('click', () => {
+            // Lógica para finalizar o pedido
+            alert('Redirecionando para finalização do pedido!');
+            // window.location.href = '/checkout'; // Futuramente
+        });
+    </script>
+</body>
+</html>

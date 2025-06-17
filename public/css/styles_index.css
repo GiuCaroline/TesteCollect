@@ -1,0 +1,268 @@
+#collectExpress_Index {
+	font-family: Arial, sans-serif;
+	font-size: 185px;
+	font-weight: bold;
+	text-align: left;
+	color: black;
+	margin-top: -50px;
+}
+
+#caminhao{
+	margin-left: 700px;
+	margin-top: -500px;
+}
+
+#vazada{
+	font-family: Arial, sans-serif;
+	font-size: 185px;
+	font-weight: bold;
+	text-align: left;
+	color: transparent;
+	margin-top: -709px;
+	-webkit-text-stroke: 4px black;
+}
+
+#descricao_1 {
+	font-family: Arial, sans-serif;
+	font-size: 24px;
+	font-weight: normal;
+	text-align: left;
+	color: black;	
+	margin-left: 60px;
+	margin-top: -60px;
+}
+
+
+.btn-saiba-mais {
+	display: inline-block;
+	padding: 20px 30px;
+	font-size: 32px;
+	font-weight: bold;
+	text-align: left;
+	text-decoration: none;
+	color: #fff;
+	background-color: black;
+	border: 2px solid black;
+	border-radius: 50px;
+	transition: background-color 0.3s, color 0.3s;
+	margin-top: 40px;
+	margin-left: 60px;
+}
+
+.btn-saiba-mais:hover {
+	background-color: #0056b3;
+	color: #fff;
+}
+
+.centralizar {
+	display: block;
+	align-items: center;
+}
+
+.oQue {
+	font-family: Arial, sans-serif;
+    font-size: 65px;
+    font-weight: normal;
+    text-align: center;
+    color: #676767;
+	margin-top: 200px;
+	font-weight: bold;
+}
+
+.container_ofere {
+	margin-top: 190px;
+    width: 80%;
+    height: 150px;
+    box-shadow: 0px 4px 30px 0px #00000099;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+	position: relative;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.titulo{
+	font-weight: bold;
+	color:#676767;
+}
+
+.texto{
+	font-family: Arial, sans-serif;
+    font-size: 15px;
+    font-weight: normal;
+    text-align: left;
+    color: #676767;
+    justify-content: space-between;
+}
+
+.deixeTudo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    text-align: center;
+}
+
+.facil {
+    font-family: Arial, sans-serif;
+    font-size: 64px;
+    font-weight: bold;
+    color: #676767;
+    margin: 0;
+    display: inline;
+}
+
+.collect {
+    font-weight: bold;
+    font-size: 64px;
+    color: #676767;
+    padding: 0 10px;
+    display: inline-block;
+    margin-left: 10px;
+    border: 4px solid #000;
+}
+
+
+.textoFacil {
+	font-family: Arial, sans-serif;
+    font-size: 30px;
+    font-weight: normal;
+    text-align: center;
+    color: #676767;
+    justify-content: space-between;
+	margin-top: -60px;
+}
+
+.nossosServicos {
+	font-family: Arial, sans-serif;
+    font-size: 65px;
+    font-weight: normal;
+    text-align: center;
+    color: #676767;
+	margin-top: 250px;
+	font-weight: bold;
+}
+
+.carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    gap: 40px; 
+    width: 80%; 
+    margin: 0 auto;
+	margin-top: 100px;
+    overflow: visible;
+    position: relative;
+}
+
+.carousel-item {
+    background-color: #f0f0f0;
+    border-radius: 100px;
+    padding: 20px;
+    text-align: center;
+    width: 300px;
+	height: 550px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: scale(0.8); /* Itens laterais menores */
+}
+
+.carousel-item img {
+	margin-top: 15px;
+    border-radius: 100px;
+    width: 250px;
+    height: 200px;
+}
+
+.carousel-item.active {
+    width: 400px;
+	height: 650px;
+    background-color: #fff;
+	box-shadow: 0px 4px 30px 0px #00000099;
+    transform: scale(1);
+    z-index: 1;
+    padding: 20px;
+}
+
+.carousel-inner {
+    display: flex;
+    gap: 40px;
+    transition: transform 0.5s ease;
+    width: 100%;
+    position: relative;
+}
+
+.carousel-item.active img {
+    border: 7px solid white;
+    outline: 2px solid black;
+	margin-top: 30px;
+}
+
+  
+.carousel .titulocarrossel {
+	margin-top: 20px;
+    font-size: 32px;
+    color: #000;
+}
+  
+.carousel .conteudocarrossel {
+    color: #777;
+    font-size: 24px;
+	margin-top: -15px;
+}
+
+.titulocarrossel.active {
+	margin-top: 50px;
+    font-size: 35px;
+    color: #000;
+}
+  
+.conteudocarrossel.active {
+    color: #777;
+    font-size: 27px;
+	margin-top: -15px;
+	margin-bottom: 50px;
+}
+
+.cliqueaqui {
+    padding: 10px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+	width: 204px;
+	height: 48px;
+	font-size: 20px;
+	font-weight: bold;
+	margin-top: -10px;
+}
+  
+.cliqueaqui:hover {
+    background-color: #333;
+}
+  
+.carousel-indicators {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+  
+.dot {
+    height: 15px;
+    width: 15px;
+	background-color: black;
+    border-radius: 50%;
+    margin: 0 10px;
+    display: inline-block;
+	margin-top: 50px;
+	margin-bottom: 100px;
+}
+  
+.dot.active {
+    border: 0.3px solid white;
+    outline: 2px solid black;
+	background-color: #fff;
+}

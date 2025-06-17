@@ -1,0 +1,21 @@
+.container_cadastro {
+    /*display: flex;*/
+    flex-direction: column;
+    min-height: 53vh;  /*Faz com que o container ocupe a altura total da tela */
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 400px; /* Largura máxima do formulário */
+    margin: auto; /* Centraliza o formulário na tela */
+}
+
+
+.container_pre_cadastro {
+    /*display: flex;*/
+    flex-direction: column;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 400px; /* Largura máxima do formulário */
+    margin: auto; /* Centraliza o formulário na tela */
+}

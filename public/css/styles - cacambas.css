@@ -1,0 +1,94 @@
+main {
+    padding: 2rem;
+}
+
+.container{
+    display: inline;
+}
+
+.pesquisar {
+    width: 400px;
+    font-size: 24px;
+    border-radius: 30px;
+    border-color: #000;
+    margin-bottom: 80px;
+    margin-top: -15px;
+}
+
+.btn-lupa {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    margin-top: -15px;
+    margin-left: -50px;
+}
+
+.btn-lupa img {
+    display: block;
+}
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 350px);
+    grid-template-rows: repeat(3);
+    align-items: center;
+    justify-content: center; 
+    width: 80%; 
+    margin: 0 auto;
+	margin-top: -70px;
+    overflow: visible;
+    position: relative;
+    margin-bottom: 35px;
+}
+
+.product-card {
+    background-color: #f0f0f0;
+    border-radius: 100px;
+    padding: 20px;
+    text-align: center;
+    width: 300px;
+	height: 430px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: scale(0.8); /* Itens laterais menores */
+    border: 10px solid white;
+    outline: 2px solid black;
+}
+
+.product-card img {
+	margin-top: 15px;
+    border-radius: 100px;
+    width: 250px;
+    height: 200px;
+}
+
+.product-card h2 {
+	margin-top: 45px;
+    font-size: 24px;
+    color: #000;
+}
+
+.product-card p {
+    color: #777;
+    font-size: 20px;
+    margin-top: 30px;
+}
+
+.product-card .preco {
+	margin-top: 35px;
+    font-size: 22px;
+    color: #000;
+    display: block;
+}
+
+.product-card button {
+    margin-top: 25px;
+    padding: 0.5rem 1rem;
+    background-color: #91ab6f;
+    border: none;
+    border-radius: 20px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 20px;
+}

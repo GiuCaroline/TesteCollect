@@ -1,0 +1,244 @@
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	background-color: #FFFFFF;
+	color: #333333;
+	align-items: center;
+    overflow-x: hidden;
+}
+
+header {
+	padding: 1rem;
+	margin: 0 auto;
+	align-items: center;
+	background-color: #FFFFFF;
+}
+
+main {
+	width: 70%;
+	margin: 0 auto;
+	padding: 20px;
+	line-height: 0.01;
+	z-index: 5000;
+    flex-grow: 1;
+}
+
+nav {
+	background-color: #fff;
+	padding: 10px;
+	display: flex;
+	align-items: center;
+	display: flex;
+	gap: 20px;
+}
+
+#logo {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+nav ul li a {
+	text-decoration: none;
+	color: #5F5F5F;
+	font-size: 20px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+nav ul li {
+	display: inline-block;
+	margin: 0 1rem;
+	align-items: left;
+}
+
+nav ul {
+	list-style: none;
+	padding: 0;
+	justify-content: space-between;
+}
+
+.perfil-sair {
+    display: flex;
+    gap: 30px; 
+}
+
+#perfil, #sair {
+    cursor: pointer;
+}
+
+
+.hero {
+	background-color: #FFC107;
+	padding: 2rem;
+	text-align: center;
+	color: #333333;
+}
+
+.hero h2 {
+	margin: 0;
+}
+
+.hero p {
+	margin: 1rem 0;
+}
+
+.btn {
+	background-color: #4CAF50;
+	color: #FFFFFF;
+	padding: 0.5rem 1rem;
+	text-decoration: none;
+	border-radius: 5px;
+	border: none;
+	cursor: pointer;
+}
+
+.form-section {
+	padding: 2rem;
+	background-color: #fff;
+	max-width: 400px;
+	max-width: 400px;
+	margin: 2rem auto;
+	border-radius: 8px;
+	border: solid 2px #4CAF50;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	line-height: 1.5;
+}
+
+.form-section-tpo-usuario {
+	padding: 2rem;
+	background-color: #fff;
+	max-width: 400px;
+	max-height: 300px;
+	margin: 2rem auto;
+	border-radius: 8px;
+	border: solid 2px #4CAF50;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	line-height: 1.5;
+}
+
+form label {
+	display: block;
+	margin: 0.5rem 0 0.2rem;
+}
+
+form input {
+	width: 100%;
+	padding: 0.5rem;
+	margin-bottom: 1rem;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+#servicosList {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	padding: 20px;
+	background-color: #fff;
+}
+
+.servico-item {
+	border: 2px solid #4CAF50;
+	border-radius: 8px;
+	padding: 20px;
+	background-color: #fff;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	width: calc(33% - 20px);
+	/* Ajuste o tamanho conforme necessário */
+	margin: auto;
+}
+
+.servico-nome {
+	font-size: 1.2em;
+	color: #333;
+	margin-bottom: 10px;
+}
+
+.servico-localizacao {
+	font-size: 1em;
+	color: #666;
+	margin-bottom: 10px;
+}
+
+.servico-preco {
+	font-size: 1.1em;
+	color: #4CAF50;
+}
+
+.serviçosdisponiveis {
+	align-content: center;
+}
+
+/*@media screen and (max-width: 500px)*/
+@media (max-width: 768px) {
+	nav ul li {
+		display: inline-block;
+		margin: 0.5rem 0;
+	}
+	.nav {
+        display: none;
+    }
+
+}
+
+footer {
+	background-color: #D9D9D9;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+	max-width: 100%;
+    overflow-x: hidden;
+}
+
+footer .footer_content {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+footer .footer_content div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 20px;
+	flex: 1;
+	flex-direction: column;
+}
+
+footer h3 {
+	color: #575757;
+	font-size: 22px;
+	margin: 10px 20px;
+	font-family: 'Bebas Neue', sans-serif;
+}
+
+footer ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+footer ul li {
+	color: #575757;
+	font-size: 16px;
+	margin: 5px 0;
+	text-align: center;
+}
+
+footer p {
+	color: #575757;
+	font-size: 16px;
+	margin: 10px 0;
+	text-align: center;
+}
+
+.footer_pre{
+	margin-top: 100%;
+}

@@ -1,0 +1,26 @@
+.container_login {
+    /*display: flex;*/
+    flex-direction: column;
+    min-height: 53vh;  /*Faz com que o container ocupe a altura total da tela */
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px; /* Largura máxima do formulário */
+    max-height: 600px;
+    margin: auto; /* Centraliza o formulário na tela */
+}
+
+footer {
+    margin-top: 15px;
+    background-color: #D9D9D9;
+    padding: 20px;
+    border-image-slice: 1;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    bottom: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    margin-bottom: 20px;
+}

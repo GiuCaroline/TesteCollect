@@ -1,0 +1,120 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #FFFFFF;
+    color: #333333;
+    align-items: center;
+}
+
+.hero {
+    background-color: #FFC107;
+    padding: 2rem;
+    text-align: center;
+    color: #333333;
+}
+
+.hero h2 {
+    margin: 0;
+}
+
+.hero p {
+    margin: 1rem 0;
+}
+
+.btn {
+    background-color: #4CAF50;
+    color: #FFFFFF;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.form-section {
+    padding: 2rem;
+    background-color: #fff;
+    max-width: 400px;
+    margin: 2rem auto;
+    border-radius: 8px;
+    border: solid 2px #4CAF50;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/*.form-section {
+    padding: 2rem;
+    background-color: #F5F5F5;
+    max-width: 400px;
+    margin: 2rem auto;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}*/
+
+form label {
+    display: block;
+    margin: 0.5rem 0 0.2rem;
+}
+
+form input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+/*#servicosList {
+    background-color: #ccc;
+    border: solid 2px #4CAF50;
+}*/
+
+#servicosList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.servico-item {
+    border: 2px solid #4CAF50;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: calc(33% - 20px); /* Ajuste o tamanho conforme necessário */;
+    margin: auto;
+}
+
+.servico-nome {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.servico-localizacao {
+    font-size: 1em;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.servico-preco {
+    font-size: 1.1em;
+    color: #4CAF50;
+}
+
+.serviçosdisponiveis {
+    align-content: center;
+}
+
+@media (max-width: 600px) {
+    nav ul li {
+        display: block;
+        margin: 0.5rem 0;
+    }
+}
+
+

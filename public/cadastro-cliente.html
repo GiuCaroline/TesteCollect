@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Cliente - CollectExpress</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/styles - cadastro.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="/imagens/logo.png" alt="Logo CollectExpress">
+        </div>
+        <nav id="main-nav"></nav>
+    </header>
+
+    <main>
+        <div class="cadastro-container">
+            <h2>Cadastro de Cliente</h2>
+            <form id="register-form">
+                 <div class="input-group">
+                    <label for="nome">Nome Completo</label>
+                    <input type="text" id="nome" name="nome" required>
+                </div>
+                <div class="input-group">
+                    <label for="cpf">CPF</label>
+                    <input type="text" id="cpf" name="cpf" required>
+                </div>
+                <div class="input-group">
+                    <label for="cep">CEP</label>
+                    <input type="text" id="cep" name="cep" required>
+                </div>
+                <div class="input-group">
+                    <label for="numcasa">Número da Casa</label>
+                    <input type="text" id="numcasa" name="numcasa" required>
+                </div>
+                <div class="input-group">
+                    <label for="telefone">Telefone</label>
+                    <input type="tel" id="telefone" name="telefone" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="input-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" name="senha" required>
+                </div>
+                <button type="submit" class="btn">Cadastrar</button>
+                <div id="error-message" class="error-message"></div>
+            </form>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 CollectExpress. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="/js/auth.js"></script>
+    <script>
+        document.getElementById('register-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            const errorMessageDiv = document.getElementById('error-message');
+
+            const response = await fetch('/api/users/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                window.location.href = result.redirectUrl || '/servicos';
+            } else {
+                errorMessageDiv.textContent = result.message;
+            }
+        });
+    </script>
+</body>
+</html>
