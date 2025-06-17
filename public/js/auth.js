@@ -51,3 +51,29 @@ document.addEventListener('DOMContentLoaded', async () => {
         `;
     }
 });
+const SUPABASE_URL = 'https://pgrwhhznlmdqaiwykvwr.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBncndoaHpubG1kcWFpd3lrdndyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAwNzU3ODksImV4cCI6MjA2NTY1MTc4OX0.m8VEHnHT1koXM98ClsWtqR7Ns45INxQqkpLOeBfz0lA';
+
+// Inicializa o cliente do Supabase
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// Exemplo de como buscar dados de uma tabela chamada 'produtos'
+async function buscarProdutos() {
+    try {
+        const { data, error } = await supabase
+            .from('produtos') // O nome da sua tabela
+            .select('*'); // '*' para selecionar todas as colunas
+
+        if (error) {
+            throw error;
+        }
+
+        console.log('Produtos encontrados:', data);
+        // Aqui você pode adicionar o código para exibir os dados na sua página
+    } catch (error) {
+        console.error('Erro ao buscar produtos:', error.message);
+    }
+}
+
+// Chame a função para testar
+buscarProdutos();
