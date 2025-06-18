@@ -12,7 +12,7 @@ app.use(express.static(path.join(__dirname, 'public'))); // Servir arquivos est�
 
 // --- Configuração da Sessão ---
 app.use(session({
-    secret: 'chave-super-secreta-para-seu-projeto', // Mude isso para uma frase aleatória e segura
+    secret: ',YSF(lc{;209snG#Yc^9(>BLoE97a@51r0l%NzF:<"T*I1Z>=-',
     resave: false,
     saveUninitialized: true,
     cookie: { 
@@ -24,6 +24,7 @@ app.use(session({
 
 // --- Rotas da Aplicação ---
 // Carregamos os arquivos de rotas que vamos criar
+const cadastroRouter = require('./routes/cadastro');
 const userRoutes = require('./routes/users');
 const cacambaRoutes = require('./routes/cacambas');
 const cartRoutes =require('./routes/cart');
@@ -32,6 +33,7 @@ const cartRoutes =require('./routes/cart');
 app.use('/api/users', userRoutes);       // Ex: /api/users/login
 app.use('/api/cacambas', cacambaRoutes); // Ex: /api/cacambas/
 app.use('/api/cart', cartRoutes);     // Ex: /api/cart/add
+app.use('/', cadastroRouter);       // Ex: /api/cadastro
 
 // --- Rotas para servir as páginas HTML ---
 // Em vez de o usuário acessar /index.html, ele acessará /
