@@ -10,7 +10,7 @@ const pool = new Pool({
     ssl: {
         rejectUnauthorized: false
     },
-    host: 'SEU_HOST_DO_SUPABASE_AQUI' // Não se esqueça de preencher isto!
+    host: 'db.pgrwhhznlmdqaiwykvwr.supabase.co' // Não se esqueça de preencher isto!
 });
 
 module.exports = {
