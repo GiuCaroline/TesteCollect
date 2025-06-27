@@ -3,78 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - CollectExpress</title>
-	<link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/styles-login.css">
-    
+    <title>Login - Collect</title>
+    <link rel="stylesheet" href="css/styles - login.css">
 </head>
 <body>
-
-    <div class="container_login">
-        <h1>Login</h1>
-        <form  id="loginForm">
-            <div class="form-group user-type">
-                <label>
-                    <input type="radio" name="tipo_usuario" value="cliente" checked> Cliente
-                </label>
-                <label>
-                    <input type="radio" name="tipo_usuario" value="cacambeiro"> Cacambeiro
-                </label>
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
+    <div class="login-container">
+        <h2>Login</h2>
+        
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="email">E-mail</label>
                 <input type="email" id="email" name="email" required>
             </div>
-            <div class="form-group">
+            <div class="input-group">
                 <label for="senha">Senha</label>
                 <input type="password" id="senha" name="senha" required>
             </div>
-            <button type="submit">Entrar</button>
+            <button type="submit" class="btn">Entrar</button>
+            <div id="error-message" class="error-message" style="display: none;"></div>
         </form>
-        <div id="message-container" class="message"></div>
+
+        <p class="link-cadastro">Não tem uma conta? <a href="cadastro.html">Cadastre-se</a></p>
     </div>
 
-	<footer class="footer_pre">
-		<div class="footer_content">
-			<div>
-				<h3>CONTATO</h3>
-				<ul>
-					<li>collectexpress.app@outlook.com</li>
-					<li>collectexpress_instagram</li>
-					<li>collectexpress_tiktok</li>
-					<li>collectexpress_seilaoq</li>
-					<li>(11) 99999-9999</li>
-				</ul>
-			</div>
-	
-			<div>
-				<h3>DESENVOLVEDORES</h3>
-				<ul>
-					<li>Anna Carolina De Azevedo Leite</li>
-					<li>Gabriel de Andrade Ferreira</li>
-					<li>Giulia Caroline Claro</li>
-					<li>Leonardo Dias Dos Santos</li>
-					<li>Pedro Henrique Batista Dos Santos</li>
-				</ul>
-			</div>
-	
-			<div>
-				<h3>ACOMPANHE-NOS</h3>
-				<ul>
-					<li>github.com/annacarolinaa</li>
-					<li>github.com/biel388</li>
-					<li>github.com/GiuCaroline</li>
-					<li>github.com/Leo-Santoss</li>
-					<li>github.com/pedrosantos664</li>
-				</ul>
-			</div>
-		</div>
-	
-		<p>
-			CollectExpress® 2024
-		</p>
-	</footer>
-	
-    <script src="/js/login.js"></script>
-
+    <script src="js/login.js" defer></script>
+</body>
 </html>
