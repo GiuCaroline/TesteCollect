@@ -1,15 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const {
-    createClient
-} = require('@supabase/supabase-js');
+const supabase = require('../db'); // Importa a conexão
 const bcrypt = require('bcrypt');
-
-// Configuração do cliente Supabase
-// Certifique-se de que as suas variáveis de ambiente estão corretas no Render.
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
 
 router.post('/', async (req, res) => {
     const {
@@ -19,7 +11,6 @@ router.post('/', async (req, res) => {
         userType
     } = req.body;
 
-    // Validação básica dos dados recebidos
     if (!nome || !email || !senha || !userType) {
         return res.status(400).json({
             error: 'Todos os campos são obrigatórios.'
@@ -27,16 +18,14 @@ router.post('/', async (req, res) => {
     }
 
     try {
-        // Criptografar a senha antes de salvar
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(senha, saltRounds);
 
-        // Inserir o novo usuário na tabela 'usuarios' do Supabase
         const {
             data,
             error
         } = await supabase
-            .from('tb_usuarios') 
+            .from('tb_usuarios')
             .insert([{
                 nome: nome,
                 email: email,
@@ -47,7 +36,6 @@ router.post('/', async (req, res) => {
 
         if (error) {
             console.error('Erro ao cadastrar usuário no Supabase:', error);
-            // Verifica se é um erro de violação de unicidade (email já existe)
             if (error.code === '23505') {
                 return res.status(409).json({
                     error: 'O e-mail informado já está em uso.'
