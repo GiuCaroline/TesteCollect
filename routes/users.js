@@ -1,67 +1,73 @@
+// Local do arquivo: routes/users.js
+
 const express = require('express');
 const router = express.Router();
-const db = require('../db');
-const bcrypt = require('bcrypt');
+const supabase = require('../db'); // Importa a conexão com o Supabase
+const bcrypt = require('bcrypt'); // Importa o bcrypt para comparar senhas
+const jwt = require('jsonwebtoken'); // Importa o JWT para gerar tokens de autenticação
 
 /**
- * ======================================================
- * ROTA DE LOGIN UNIFICADA
- * ======================================================
+ * @route   POST /users/login
+ * @desc    Autentica um usuário e retorna um token JWT.
+ * @access  Public
  */
 router.post('/login', async (req, res) => {
-    const { email, senha, tipo_usuario } = req.body;
+    // 1. Extrai o email e a senha do corpo da requisição.
+    const { email, senha } = req.body;
 
-    if (!email || !senha || !tipo_usuario) {
-        return res.status(400).json({ message: 'Email, senha e tipo de usuário são obrigatórios.' });
+    // 2. Validação básica para garantir que os campos não estão vazios.
+    if (!email || !senha) {
+        return res.status(400).json({ message: 'Email e senha são obrigatórios.' });
     }
 
     try {
-        // Usando o nome correto da tabela "tb_usuarios"
-        const userResult = await db.query("SELECT * FROM tb_usuarios WHERE email = $1 AND tipo_usuario = $2", [email, tipo_usuario]);
+        // 3. Busca no banco de dados por um usuário com o email fornecido.
+        // Usamos .from('usuarios') para especificar a tabela.
+        // Usamos .select('*') para pegar todas as colunas.
+        // Usamos .eq('email', email) para filtrar pelo email.
+        // .single() garante que esperamos apenas um resultado, ou um erro se não houver ou houver mais de um.
+        const { data: usuario, error } = await supabase
+            .from('tb_usuarios')
+            .select('*')
+            .eq('email', email)
+            .single();
 
-        if (userResult.rows.length === 0) {
-            return res.status(401).json({ message: "Credenciais inválidas ou tipo de perfil incorreto." });
+        // 4. Se o Supabase retornar um erro ou não encontrar o usuário, as credenciais são inválidas.
+        if (error || !usuario) {
+            console.log('Erro do Supabase ou usuário não encontrado:', error);
+            return res.status(401).json({ message: 'Credenciais inválidas. Verifique seu e-mail e senha.' });
         }
 
-        const user = userResult.rows[0];
-        const validPassword = await bcrypt.compare(senha, user.senha);
+        // 5. Compara a senha enviada pelo usuário com a senha criptografada (hash) no banco.
+        // A função bcrypt.compare faz isso de forma segura, sem expor a senha original.
+        const senhaCorreta = await bcrypt.compare(senha, usuario.senha_hash);
 
-        if (!validPassword) {
-            return res.status(401).json({ message: "Credenciais inválidas ou tipo de perfil incorreto." });
+        // 6. Se a comparação de senhas falhar, as credenciais são inválidas.
+        if (!senhaCorreta) {
+            return res.status(401).json({ message: 'Credenciais inválidas. Verifique seu e-mail e senha.' });
         }
 
-        // Usando a coluna correta do ID "id_usuario"
-        req.session.user = {
-            id: user.id_usuario,
-            nome: user.nome,
-            email: user.email,
-            tipo: user.tipo_usuario
-        };
+        // 7. Se as senhas correspondem, o login é bem-sucedido.
+        // Geramos um token JWT que será usado para autenticar o usuário em futuras requisições.
+        // ATENÇÃO: Crie um arquivo .env na raiz do projeto e adicione a variável JWT_SECRET=seu_segredo_super_secreto
+        const token = jwt.sign(
+            { id: usuario.id_usuario, tipo_usuario: usuario.tipo_usuario },
+            process.env.JWT_SECRET || 'fallback_secret_key', // Use uma variável de ambiente!
+            { expiresIn: '1h' } // O token expira em 1 hora
+        );
 
-        // Redirecionando para a página inicial, como solicitado
-        const redirectUrl = '/index.html';
-        
-        res.status(200).json({ success: true, message: "Login bem-sucedido!", redirectUrl });
+        // 8. Retorna uma resposta de sucesso para o frontend com o token e o tipo de usuário.
+        res.status(200).json({
+            message: 'Login bem-sucedido!',
+            token,
+            tipo_usuario: usuario.tipo_usuario
+        });
 
     } catch (err) {
-        console.error("Erro no servidor durante o login:", err);
-        res.status(500).json({ message: "Erro interno do servidor." });
+        // Em caso de qualquer outro erro no servidor, loga o erro e retorna uma mensagem genérica.
+        console.error('Erro inesperado no servidor durante o login:', err);
+        res.status(500).json({ message: 'Ocorreu um erro no servidor. Tente novamente mais tarde.' });
     }
 });
 
-/**
- * ======================================================
- * ROTA DE LOGOUT
- * ======================================================
- */
-router.get('/logout', (req, res) => {
-    req.session.destroy(err => {
-        if (err) {
-            return res.status(500).send("Não foi possível fazer logout.");
-        }
-        res.redirect('/login.html');
-    });
-});
-
-// Não se esqueça de exportar o router no final!
 module.exports = router;
