@@ -30,7 +30,6 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
             localStorage.setItem('token', result.token);
             localStorage.setItem('tipo_usuario', result.tipo_usuario);
 
-            // --- LÓGICA DE REDIRECIONAMENTO CORRIGIDA ---
             // Verifica o tipo de usuário retornado pelo servidor e redireciona
             if (result.tipo_usuario === 'cliente') {
                 window.location.href = '/perfilcliente.html';

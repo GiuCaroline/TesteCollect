@@ -8,10 +8,10 @@ router.post('/', async (req, res) => {
         nome,
         email,
         senha,
-        userType
+        tipo_usuario
     } = req.body;
 
-    if (!nome || !email || !senha || !userType) {
+    if (!nome || !email || !senha || !tipo_usuario) {
         return res.status(400).json({
             error: 'Todos os campos são obrigatórios.'
         });
@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
                 nome: nome,
                 email: email,
                 senha: hashedPassword,
-                tipo_usuario: userType
+                tipo_usuario: tipo_usuario
             }])
             .select();
 

@@ -1,64 +1,57 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const tipo_usuarioSelect = document.getElementById('tipo_usuario');
+    const additionalFields = document.getElementById('additionalFields');
 
-// Executa o código quando o HTML da página estiver completamente carregado
-document.addEventListener('DOMContentLoaded', () => {
-    // Pega os elementos do HTML que vamos manipular
-    const tipoUsuarioSelect = document.getElementById('tipo_usuario');
-    const camposClienteDiv = document.getElementById('campos-cliente');
-    const camposCacambeiroDiv = document.getElementById('campos-cacambeiro');
-    const form = document.getElementById('cadastro-form');
-    const errorMessageDiv = document.getElementById('error-message');
-
-    // Adiciona um "ouvinte" para o evento de mudança no seletor
-    tipoUsuarioSelect.addEventListener('change', (event) => {
-        const tipoSelecionado = event.target.value;
-
-        // Esconde ambos os blocos de campos por padrão
-        camposClienteDiv.style.display = 'none';
-        camposCacambeiroDiv.style.display = 'none';
-
-        if (tipoSelecionado === 'cliente') {
-            // Se for cliente, mostra apenas os campos de cliente
-            camposClienteDiv.style.display = 'block';
-        } else if (tipoSelecionado === 'cacambeiro') {
-            // Se for caçambeiro, mostra apenas os campos de caçambeiro
-            camposCacambeiroDiv.style.display = 'block';
+    tipo_usuarioSelect.addEventListener('change', function() {
+        if (this.value === 'cacambeiro') {
+            additionalFields.style.display = 'block';
+        } else {
+            additionalFields.style.display = 'none';
         }
     });
 
-    // Adiciona um "ouvinte" para o evento de envio do formulário
-    form.addEventListener('submit', async (event) => {
-        // Previne o comportamento padrão do formulário (que recarregaria a página)
+    document.getElementById('cadastroForm').addEventListener('submit', async function(event) {
         event.preventDefault();
-        errorMessageDiv.textContent = ''; // Limpa mensagens de erro antigas
 
-        // Coleta os dados do formulário
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
+        const nome = document.getElementById('nome').value;
+        const email = document.getElementById('email').value;
+        const senha = document.getElementById('senha').value;
+        const tipo_usuario = document.getElementById('tipo_usuario').value;
+
+        // Validação básica no lado do cliente
+        if (!nome || !email || !senha || !tipo_usuario) {
+            alert('Por favor, preencha todos os campos obrigatórios.');
+            return;
+        }
 
         try {
-            // Envia os dados para o servidor usando a API Fetch
-            const response = await fetch('/cadastrar', {
+            // CORREÇÃO: A URL do fetch deve ser '/cadastro'
+            const response = await fetch('/cadastro', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(data),
+                body: JSON.stringify({
+                    nome,
+                    email,
+                    senha,
+                    tipo_usuario
+                })
             });
 
             const result = await response.json();
 
-            if (result.success) {
-                // Se o backend retornar sucesso...
-                alert('Cadastro realizado com sucesso!'); // Pop-up simples
-                // Redireciona o usuário para a página inicial
+            if (response.ok) {
+                alert(result.message); // Exibe "Usuário cadastrado com sucesso!"
                 window.location.href = '/index.html';
             } else {
-                // Se o backend retornar erro, mostra a mensagem
-                errorMessageDiv.textContent = result.message || 'Ocorreu um erro.';
+                // Exibe a mensagem de erro vinda do servidor (ex: "E-mail já em uso")
+                alert('Erro: ' + result.error);
             }
+
         } catch (error) {
             console.error('Erro no fetch:', error);
-            errorMessageDiv.textContent = 'Não foi possível conectar ao servidor. Verifique sua conexão.';
+            alert('Ocorreu um erro ao tentar realizar o cadastro. Verifique a consola para mais detalhes.');
         }
     });
 });
