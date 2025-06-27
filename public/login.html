@@ -34,46 +34,6 @@
         <div id="message-container" class="message"></div>
     </div>
 
-    <script>
-        document.getElementById('login-form').addEventListener('submit', async function(event) {
-            event.preventDefault(); // Impede o envio padrão do formulário
-
-            const form = event.target;
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries()); // Converte os dados do formulário para um objeto
-
-            const messageContainer = document.getElementById('message-container');
-            messageContainer.textContent = ''; // Limpa mensagens anteriores
-
-            try {
-                const response = await fetch('/users/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
-
-                const result = await response.json();
-
-                if (response.ok) {
-                    // Se o login for bem-sucedido, redireciona para a página de perfil
-                    messageContainer.style.color = 'green';
-                    messageContainer.textContent = result.message;
-                    window.location.href = result.redirectUrl;
-                } else {
-                    // Se houver erro, exibe a mensagem
-                    messageContainer.style.color = 'red';
-                    messageContainer.textContent = result.message || 'Ocorreu um erro.';
-                }
-            } catch (error) {
-                messageContainer.style.color = 'red';
-                messageContainer.textContent = 'Erro de conexão. Tente novamente.';
-                console.error('Erro no fetch:', error);
-            }
-        });
-    </script>
-
 	<footer class="footer_pre">
 		<div class="footer_content">
 			<div>
@@ -114,23 +74,7 @@
 			CollectExpress® 2024
 		</p>
 	</footer>
-	<script>
-		function redirecionar() {
-			const select = document.getElementById('tipo');
-			const valorSelecionado = select.value;
-		
-			let url;
-			if (valorSelecionado === 'cliente') {
-				url = 'logincliente.php'; // URL para Cliente
-			} else if (valorSelecionado === 'cacambeiro') {
-				url = 'logincacambeiro.php'; // URL para Caçambeiro
-			}
-		
-			if (url) {
-				window.location.href = url; // Redireciona para a URL correspondente
-			}
-		}
-		</script>
-</body>
+	
+    <script src="/js/login.js"></script>
 
 </html>
