@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const supabase = require('../db'); // Importa a conexão
+const supabase = require('../db');
 const bcrypt = require('bcrypt');
 
 router.post('/', async (req, res) => {
@@ -8,12 +8,15 @@ router.post('/', async (req, res) => {
         nome,
         email,
         senha,
-        tipo_usuario
+        tipo_usuario,
+        cpf,
+        nome_empresa,
+        cnpj
     } = req.body;
 
     if (!nome || !email || !senha || !tipo_usuario) {
         return res.status(400).json({
-            error: 'Todos os campos são obrigatórios.'
+            error: 'Campos principais (nome, email, senha, tipo) são obrigatórios.'
         });
     }
 
@@ -25,12 +28,15 @@ router.post('/', async (req, res) => {
             data,
             error
         } = await supabase
-            .from('tb_usuarios')
+            .from('tb_usuarios') 
             .insert([{
                 nome: nome,
                 email: email,
                 senha: hashedPassword,
-                tipo_usuario: tipo_usuario
+                tipo_usuario: tipo_usuario,
+                cpf: cpf || null, 
+                nome_empresa: nome_empresa || null,
+                cnpj: cnpj || null
             }])
             .select();
 
@@ -46,7 +52,6 @@ router.post('/', async (req, res) => {
             });
         }
 
-        console.log('Usuário cadastrado com sucesso:', data);
         res.status(201).json({
             message: 'Usuário cadastrado com sucesso!',
             user: data[0]

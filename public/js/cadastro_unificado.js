@@ -1,57 +1,73 @@
 document.addEventListener('DOMContentLoaded', function() {
     const tipo_usuarioSelect = document.getElementById('tipo_usuario');
-    const additionalFields = document.getElementById('additionalFields');
+    const clienteFields = document.getElementById('clienteFields');
+    const cacambeiroFields = document.getElementById('cacambeiroFields');
+    const form = document.getElementById('cadastroForm');
 
+    // Evento para mostrar/esconder campos com base na seleção
     tipo_usuarioSelect.addEventListener('change', function() {
-        if (this.value === 'cacambeiro') {
-            additionalFields.style.display = 'block';
+        if (this.value === 'cliente') {
+            clienteFields.style.display = 'block';
+            cacambeiroFields.style.display = 'none';
+        } else if (this.value === 'cacambeiro') {
+            clienteFields.style.display = 'none';
+            cacambeiroFields.style.display = 'block';
         } else {
-            additionalFields.style.display = 'none';
+            clienteFields.style.display = 'none';
+            cacambeiroFields.style.display = 'none';
         }
     });
 
-    document.getElementById('cadastroForm').addEventListener('submit', async function(event) {
+    // Evento de submissão do formulário
+    form.addEventListener('submit', async function(event) {
         event.preventDefault();
 
+        // Recolha dos dados do formulário
         const nome = document.getElementById('nome').value;
         const email = document.getElementById('email').value;
         const senha = document.getElementById('senha').value;
         const tipo_usuario = document.getElementById('tipo_usuario').value;
 
-        // Validação básica no lado do cliente
-        if (!nome || !email || !senha || !tipo_usuario) {
-            alert('Por favor, preencha todos os campos obrigatórios.');
-            return;
+        // Cria o corpo da requisição com os dados comuns
+        const requestBody = {
+            nome,
+            email,
+            senha,
+            tipo_usuario,
+            cpf: null,
+            nome_empresa: null,
+            cnpj: null,
+        };
+
+        // Adiciona os dados específicos do tipo de usuário
+        if (tipo_usuario === 'cliente') {
+            requestBody.cpf = document.getElementById('cpf').value;
+        } else if (tipo_usuario === 'cacambeiro') {
+            requestBody.nome_empresa = document.getElementById('nome_empresa').value;
+            requestBody.cnpj = document.getElementById('cnpj').value;
         }
 
         try {
-            // CORREÇÃO: A URL do fetch deve ser '/cadastro'
             const response = await fetch('/cadastro', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    nome,
-                    email,
-                    senha,
-                    tipo_usuario
-                })
+                body: JSON.stringify(requestBody)
             });
 
             const result = await response.json();
 
             if (response.ok) {
-                alert(result.message); // Exibe "Usuário cadastrado com sucesso!"
+                alert(result.message);
                 window.location.href = '/index.html';
             } else {
-                // Exibe a mensagem de erro vinda do servidor (ex: "E-mail já em uso")
                 alert('Erro: ' + result.error);
             }
 
         } catch (error) {
             console.error('Erro no fetch:', error);
-            alert('Ocorreu um erro ao tentar realizar o cadastro. Verifique a consola para mais detalhes.');
+            alert('Ocorreu um erro ao tentar realizar o cadastro.');
         }
     });
 });
