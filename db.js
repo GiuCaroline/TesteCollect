@@ -1,20 +1,22 @@
-// giucaroline/testecollect/TesteCollect-ac0ff62df68945aabb0a221394b3e0b82886ce14/db.js
+// Local do arquivo: db.js
 
-const { Pool } = require('pg');
+// Importa a função para criar o cliente do Supabase
+const { createClient } = require('@supabase/supabase-js');
+
+// Carrega as variáveis de ambiente do arquivo .env
 require('dotenv').config();
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+// Pega a URL e a Chave Anon (pública) das variáveis de ambiente
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_ANON_KEY;
 
-// Adiciona um listener para o evento de erro no pool.
-// Isso ajuda a capturar e exibir erros de conexão futuros.
-pool.on('error', (err, client) => {
-  console.error('Erro inesperado no cliente do pool ocioso', err);
-  process.exit(-1);
-});
+// Validação para garantir que as variáveis foram carregadas
+if (!supabaseUrl || !supabaseKey) {
+    throw new Error('Supabase URL e Anon Key são obrigatórias. Verifique seu arquivo .env');
+}
 
-module.exports = pool;
+// Cria o cliente de conexão do Supabase
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+// Exporta o cliente para que outros arquivos (como users.js) possam usá-lo
+module.exports = supabase;
