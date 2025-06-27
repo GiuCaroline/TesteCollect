@@ -1,49 +1,64 @@
+// Local do arquivo: server.js
+
 const express = require('express');
+const bodyParser = require('body-parser');
 const path = require('path');
 const session = require('express-session');
+const { Pool } = require('pg'); // Importa o Pool do driver 'pg'
+const pgSession = require('connect-pg-simple')(session); // Importa e inicializa o connect-pg-simple
+
+// Carrega as variáveis de ambiente do arquivo .env
+require('dotenv').config();
+
+// Rotas da aplicação
+const usersRoutes = require('./routes/users');
+const cacambasRoutes = require('./routes/cacambas');
+const cadastroRoutes = require('./routes/cadastro');
+const cartRoutes = require('./routes/cart');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-// --- Middlewares Essenciais ---
-app.use(express.json()); // Para entender requisições com corpo em JSON
-app.use(express.urlencoded({ extended: true })); // Para entender formulários HTML
-app.use(express.static(path.join(__dirname, 'public'))); // Servir arquivos estáticos (CSS, JS, Imagens)
+// Cria um Pool de conexões com o banco de dados usando a URL do .env
+const pgPool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false // Necessário para conexões com o Supabase/Render
+    }
+});
 
-// --- Configuração da Sessão ---
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+// =========================================================================
+// NOVA CONFIGURAÇÃO DE SESSÃO
+// Agora, as sessões serão armazenadas no banco de dados.
 app.use(session({
-    secret: ',YSF(lc{;209snG#Yc^9(>BLoE97a@51r0l%NzF:<"T*I1Z>=-',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { 
-        secure: false, // Em produção (com HTTPS), mude para true
-        httpOnly: true, // Ajuda a proteger contra ataques XSS
-        maxAge: 1000 * 60 * 60 * 24 // Duração do cookie (ex: 24 horas)
+    // Configura o armazenamento da sessão para usar o banco de dados
+    store: new pgSession({
+        pool: pgPool, // Usa o pool de conexões que criamos
+        createTableIfMissing: true, // Cria a tabela 'session' automaticamente se não existir
+    }),
+    // O secret é usado para assinar o ID da sessão.
+    secret: process.env.SESSION_SECRET,
+    resave: false, // Não salva a sessão se não for modificada
+    saveUninitialized: false, // Não cria sessão até que algo seja armazenado
+    cookie: {
+        maxAge: 30 * 24 * 60 * 60 * 1000, // A sessão expira em 30 dias
+        secure: process.env.NODE_ENV === 'production', // 'true' em produção (HTTPS)
+        httpOnly: true // Previne acesso ao cookie via JavaScript no cliente
     }
 }));
+// =========================================================================
 
-// --- Rotas da Aplicação ---
-// Carregamos os arquivos de rotas que vamos criar
-const cadastroRouter = require('./routes/cadastro');
-const userRoutes = require('./routes/users');
-const cacambaRoutes = require('./routes/cacambas');
-const cartRoutes =require('./routes/cart');
+// Rotas
+app.use('/users', usersRoutes);
+app.use('/cacambas', cacambasRoutes);
+app.use('/cadastro', cadastroRoutes);
+app.use('/cart', cartRoutes);
 
-// Associamos as rotas a um caminho base
-app.use('/api/users', userRoutes);       // Ex: /api/users/login
-app.use('/api/cacambas', cacambaRoutes); // Ex: /api/cacambas/
-app.use('/api/cart', cartRoutes);     // Ex: /api/cart/add
-app.use('/', cadastroRouter);       // Ex: /api/cadastro
-
-// --- Rotas para servir as páginas HTML ---
-// Em vez de o usuário acessar /index.html, ele acessará /
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
-app.get('/login', (req, res) => res.sendFile(path.join(__dirname, 'public', 'login.html')));
-app.get('/cadastro', (req, res) => res.sendFile(path.join(__dirname, 'public', 'cadastro.html')));
-app.get('/servicos', (req, res) => res.sendFile(path.join(__dirname, 'public', 'cacambas.html')));
-app.get('/carrinho', (req, res) => res.sendFile(path.join(__dirname, 'public', 'carrinho.html')));
-
-// --- Iniciar o Servidor ---
 app.listen(port, () => {
-    console.log(`Servidor rodando em http://localhost:${port}`);
+    console.log(`Servidor rodando na porta ${port}`);
 });
