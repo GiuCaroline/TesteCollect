@@ -35,7 +35,6 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
                 localStorage.setItem('tipo_usuario', result.tipo_usuario);
             }
 
-            // --- ALTERAÇÃO PRINCIPAL AQUI ---
             // Redireciona o usuário para a página principal (index.html).
             window.location.href = '/index.html'; 
 
