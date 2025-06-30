@@ -1,54 +1,44 @@
-// Local do arquivo: public/js/login.js
+// public/js/login.js
 
-document.getElementById('loginForm').addEventListener('submit', async function(event) {
-    // Previne o comportamento padrão do formulário (recarregar a página)
-    event.preventDefault(); 
+document.getElementById('login-form').addEventListener('submit', async function(event) {
+    event.preventDefault(); // Impede o envio padrão do formulário
 
     const email = document.getElementById('email').value;
     const senha = document.getElementById('senha').value;
     const mensagemErro = document.getElementById('error-message');
 
-    // Limpa mensagens de erro anteriores
-    mensagemErro.style.display = 'none';
-    mensagemErro.textContent = '';
-
     try {
         const response = await fetch('/users/login', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email, senha })
+            body: JSON.stringify({ email, senha }),
         });
 
-        const result = await response.json();
+        const data = await response.json();
 
         if (response.ok) {
             // Login bem-sucedido!
-            
-            // Guarda o token e o tipo de usuário para manter o usuário logado
-            localStorage.setItem('token', result.token);
-            localStorage.setItem('tipo_usuario', result.tipo_usuario);
+            console.log(data.message);
+            mensagemErro.style.display = 'none'; // Esconde mensagens de erro antigas
 
-            // Verifica o tipo de usuário retornado pelo servidor e redireciona
-            if (result.tipo_usuario === 'cliente') {
-                window.location.href = '/perfilcliente.html';
-            } else if (result.tipo_usuario === 'cacambeiro') {
+            // Redireciona o usuário para a página de perfil correta.
+            // Usamos a informação 'user.tipo_usuario' que o backend nos enviou.
+            if (data.user.tipo_usuario === 'cacambeiro') {
                 window.location.href = '/perfilcacambeiro.html';
             } else {
-                 // Se, por algum motivo, o tipo não for reconhecido, vai para a home
-                window.location.href = '/index.html';
+                window.location.href = '/perfilcliente.html';
             }
-
         } else {
-            // Exibe a mensagem de erro retornada pelo servidor
-            mensagemErro.textContent = result.message || 'Erro ao fazer login.';
+            // Mostra a mensagem de erro retornada pela API
+            mensagemErro.textContent = data.error || 'Ocorreu um erro.';
             mensagemErro.style.display = 'block';
         }
     } catch (error) {
-        // Se houver um erro de rede
-        console.error('Erro na requisição de login:', error);
-        mensagemErro.textContent = 'Não foi possível conectar ao servidor.';
+        // Erro de rede ou algo que impediu a comunicação com o servidor
+        console.error('Erro ao tentar fazer login:', error);
+        mensagemErro.textContent = 'Não foi possível conectar ao servidor. Tente novamente mais tarde.';
         mensagemErro.style.display = 'block';
     }
 });
