@@ -8,15 +8,16 @@ router.post('/', async (req, res) => {
         nome,
         email,
         senha,
+        telefone,
         tipo_usuario,
         cpf,
         nome_empresa,
         cnpj
     } = req.body;
 
-    if (!nome || !email || !senha || !tipo_usuario) {
+    if (!nome || !email || !senha || !telefoene || !tipo_usuario) {
         return res.status(400).json({
-            error: 'Campos principais (nome, email, senha, tipo) são obrigatórios.'
+            error: 'Campos principais (nome, email, senha, telefone, tipo) são obrigatórios.'
         });
     }
 
@@ -27,13 +28,14 @@ router.post('/', async (req, res) => {
             data,
             error
         } = await supabase
-            .from('tb_usuarios') // Nome correto da tabela
+            .from('tb_usuarios') 
             .insert([{
                 nome: nome,
                 email: email,
                 senha: hashedPassword,
+                telefone: telefone,
                 tipo_usuario: tipo_usuario,
-                cpf: cpf || null, // Garante que o valor é null se for uma string vazia
+                cpf: cpf || null, 
                 nome_empresa: nome_empresa || null,
                 cnpj: cnpj || null
             }])
