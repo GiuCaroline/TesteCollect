@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const userTypeSelect = document.getElementById('userType');
+    const tipo_usuarioSelect = document.getElementById('tipo_usuario');
     const clienteFields = document.getElementById('clienteFields');
     const cacambeiroFields = document.getElementById('cacambeiroFields');
     const form = document.getElementById('cadastroForm');
 
     // Evento para mostrar/esconder campos com base na seleção
-    userTypeSelect.addEventListener('change', function() {
+    tipo_usuarioSelect.addEventListener('change', function() {
         if (this.value === 'cliente') {
             clienteFields.style.display = 'block';
             cacambeiroFields.style.display = 'none';
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const email = document.getElementById('email').value;
         const senha = document.getElementById('senha').value;
         const telefone = document.getElementById('telefone').value;
-        const tipo_usuario = document.getElementById('userType').value;
+        const tipo_usuario = document.getElementById('tipo_usuario').value;
 
         // Cria o corpo da requisição com os dados comuns
         const requestBody = {

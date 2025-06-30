@@ -4,10 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro - Collect</title>
-    <link rel="stylesheet" href="/css/styles - login.css">
+	<link rel="stylesheet" href="css/styles.css">
+	<link rel="stylesheet" href="css/styles-cadastro.css">
+	<link rel="stylesheet" href="https://fonts.google.com/share?selection.family=Montserrat:ital,wght@0,100..900;1,100..900">
 </head>
 <body>
-    <div class="background-image"></div>
+    <header> 
+	    <nav>
+		    <img src="imagens/logo.png" id="logo" width="auto" height="60" >
+		    <div class="menu">
+			    <ul>
+                    <li><a href="index.html">Início</a></li>
+				    <li><a href="servicos.html">Serviços</a></li>
+					<li><a href="login.html">Login</a></li>
+				    <li><a href="cacambas.html">Caçambas</a></li>
+			    </ul>
+		    </div>
+		    <div class="between" style="width: 40%;"></div>
+	    </nav>
+    </header>
     <div class="container">
         <h2>Cadastro</h2>
         <form id="cadastroForm">
@@ -28,8 +43,8 @@
                 <input type="telefone" id="telefone" name="telefone" required>
             </div>
             <div class="input-group">
-                <label for="userType">Tipo de Usuário</label>
-                <select id="userType" name="userType" required>
+                <label for="tipo_usuario">Tipo de Usuário</label>
+                <select id="tipo_usuario" name="tipo_usuario" required>
                     <option value="">Selecione...</option>
                     <option value="cliente">Cliente</option>
                     <option value="cacambeiro">Caçambeiro</option>
@@ -60,5 +75,48 @@
     </div>
 
     <script src="js/cadastro_unificado.js"></script>
+    <footer>
+	<div class="footer_content">
+		<div>
+			<h3>CONTATO</h3>
+			<ul>
+				<li>collectexpress.app@outlook.com</li>
+				<li>collectexpress_instagram</li>
+				<li>collectexpress_tiktok</li>
+				<li>collectexpress_seilaoq</li>
+				<li>(11) 99999-9999</li>
+			</ul>
+		</div>
+
+		<div>
+			<h3>DESENVOLVEDORES</h3>
+			<ul>
+				<li>Anna Carolina De Azevedo Leite</li>
+				<li>Gabriel de Andrade Ferreira</li>
+				<li>Giulia Caroline Claro</li>
+				<li>Leonardo Dias Dos Santos</li>
+				<li>Pedro Henrique Batista Dos Santos</li>
+				<li>Vitória Moreno Tomazeli</li>
+
+			</ul>
+		</div>
+
+		<div>
+			<h3>ACOMPANHE-NOS</h3>
+			<ul>
+				<li>github.com/annacarolinaa</li>
+				<li>github.com/biel388</li>
+				<li>github.com/GiuCaroline</li>
+				<li>github.com/Leo-Santoss</li>
+				<li>github.com/pedrosantos664</li>
+				<li>github.com/vitomazeli</li>
+			</ul>
+		</div>
+	</div>
+
+	<p>
+		CollectExpress® 2024
+	</p>
+</footer>
 </body>
 </html>
