@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const nome = document.getElementById('nome').value;
         const email = document.getElementById('email').value;
         const senha = document.getElementById('senha').value;
+        const telefone = document.getElementById('telefone').value;
         const tipo_usuario = document.getElementById('userType').value;
 
         // Cria o corpo da requisição com os dados comuns
@@ -33,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
             nome,
             email,
             senha,
+            telefone,
             tipo_usuario,
             cpf: null,
             nome_empresa: null,

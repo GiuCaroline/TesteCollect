@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
         cnpj
     } = req.body;
 
-    if (!nome || !email || !senha || !telefoene || !tipo_usuario) {
+    if (!nome || !email || !senha || !telefone || !tipo_usuario) {
         return res.status(400).json({
             error: 'Campos principais (nome, email, senha, telefone, tipo) são obrigatórios.'
         });
