@@ -23,18 +23,17 @@ router.post('/', async (req, res) => {
     try {
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(senha, saltRounds);
-
         const {
             data,
             error
         } = await supabase
-            .from('tb_usuarios') 
+            .from('tb_usuarios') // Nome correto da tabela
             .insert([{
                 nome: nome,
                 email: email,
                 senha: hashedPassword,
                 tipo_usuario: tipo_usuario,
-                cpf: cpf || null, 
+                cpf: cpf || null, // Garante que o valor é null se for uma string vazia
                 nome_empresa: nome_empresa || null,
                 cnpj: cnpj || null
             }])
