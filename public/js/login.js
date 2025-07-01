@@ -26,9 +26,9 @@ document.getElementById('login-form').addEventListener('submit', async function(
             // Redireciona o usuário para a página de perfil correta.
             // Usamos a informação 'user.tipo_usuario' que o backend nos enviou.
             if (data.user.tipo_usuario === 'cacambeiro') {
-                window.location.href = '/perfilcacambeiro.html';
+                window.location.href = '/index.html';
             } else {
-                window.location.href = '/perfilcliente.html';
+                window.location.href = '/index.html';
             }
         } else {
             // Mostra a mensagem de erro retornada pela API
