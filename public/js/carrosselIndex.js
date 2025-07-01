@@ -1,33 +1,36 @@
-let currentIndex = 1;
+// public/js/carrosselIndex.js
+
 const items = document.querySelectorAll('.carousel-item');
-const titles = document.querySelectorAll('.titulocarrossel');
-const contents = document.querySelectorAll('.conteudocarrossel');
-const carouselInner = document.querySelector('.carousel-inner');
-const dots = document.querySelectorAll('.dot');
+let currentIndex = 0;
 
-function showItem(index) {
-  items.forEach((item, i) => {
-    item.classList.remove('active');
-    titles[i].classList.remove('active');
-    contents[i].classList.remove('active');
-    dots[i].classList.remove('active');
-    
-    if (i === index) {
-      item.classList.add('active');
-      titles[i].classList.add('active');
-      contents[i].classList.add('active');
-      dots[i].classList.add('active');
+// Cláusula de Guarda
+// 1. Encontre o elemento principal do carrossel
+const carrosselContainer = document.querySelector('.carousel-container');
+
+// 2. Se o container do carrossel NÃO existir nesta página, não execute o resto do código.
+if (!carrosselContainer) {
+    // console.log('Carrossel não encontrado nesta página, script não será executado.');
+} else {
+
+
+    // Todo o seu código existente do carrossel vai aqui dentro do 'else'
+    function showItem(index) {
+        items.forEach((item, i) => {
+            if (item) { 
+                item.style.transform = `translateX(${-index * 100}%)`;
+            }
+        });
     }
-  });
-  const offset = (index - 1) * -(items[0].offsetWidth + 40);
-    carouselInner.style.transform = `translateX(${offset}px)`;
-}
 
-dots.forEach((dot, i) => {
-  dot.addEventListener('click', () => {
-    currentIndex = i;
+    function nextItem() {
+        currentIndex = (currentIndex + 1) % items.length;
+        showItem(currentIndex);
+    }
+
+    // Inicia o carrossel
+    setInterval(nextItem, 4000); // Muda a cada 4 segundos
+
+    // Mostra o primeiro item inicialmente
     showItem(currentIndex);
-  });
-});
 
-showItem(currentIndex);
+}
