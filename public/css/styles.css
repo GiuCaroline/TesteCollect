@@ -16,14 +16,6 @@ header {
 	background-color: #FFFFFF;
 }
 
-main {
-	width: 70%;
-	margin: 0 auto;
-	padding: 20px;
-	line-height: 0.01;
-	z-index: 5000;
-    flex-grow: 1;
-}
 
 nav {
 	background-color: #fff;
@@ -31,25 +23,23 @@ nav {
 	display: flex;
 	align-items: center;
 	display: flex;
-	gap: 20px;
 }
 
 #logo {
-	font-size: px;
 	font-weight: bold;
 }
 
 nav ul li a {
 	text-decoration: none;
 	color: #5F5F5F;
-	font-size: 20px;
+	font-size: 18px;
 	font-weight: bold;
 	text-transform: uppercase;
 }
 
 nav ul li {
 	display: inline-block;
-	margin: 0 1rem;
+	margin: 0 3vh;
 	align-items: left;
 }
 
@@ -61,7 +51,6 @@ nav ul {
 
 .perfil-sair {
     display: flex;
-    gap: 30px; 
 }
 
 #perfil, #sair {
@@ -69,11 +58,11 @@ nav ul {
 }
 
 #perfil {
-	margin-left: 50%;
+	margin-left: auto;
 }
 
 #sair{
-	margin-left: 10px;
+	margin-left: 35px;
 }
 
 

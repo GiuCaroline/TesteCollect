@@ -1,59 +1,101 @@
-#collectExpress_Index {
-	font-size: 185px;
-	font-weight: bold;
-	text-align: left;
-	color: black;
-	margin-top: -50px;
-}
-
-#caminhao{
-	margin-left: 700px;
-	margin-top: -500px;
-}
-
-#vazada{
-	font-size: 185px;
-	font-weight: bold;
-	text-align: left;
-	color: transparent;
-	margin-top: -709px;
-	-webkit-text-stroke: 4px black;
-}
-
-#descricao_1 {
-	font-size: 17px;
-	font-weight: normal;
-	text-align: left;
-	color: black;	
-	margin-left: 60px;
-	margin-top: -60px;
-}
-
-
-.btn-saiba-mais {
-	display: inline-block;
-	padding: 20px 30px;
-	font-size: 25px;
-	font-weight: bold;
-	text-align: left;
-	text-decoration: none;
-	color: #fff;
-	background-color: black;
-	border: 2px solid black;
-	border-radius: 50px;
-	transition: background-color 0.3s, color 0.3s;
-	margin-top: 40px;
-	margin-left: 60px;
-}
-
-.btn-saiba-mais:hover {
-	background-color: #0056b3;
-	color: #fff;
+main {
+    width: 90%; 
+    max-width: 1200px; 
+    margin: 0 auto; /* Removemos a margem do topo (era 40px) */
+    padding: 0 20px; /* Removemos o padding vertical */
+    flex-grow: 1;
 }
 
 .centralizar {
-	display: block;
-	align-items: center;
+    position: relative; /* Container pai torna-se a referência para o posicionamento absoluto */
+    width: 100%;
+    min-height: 60vh; /* Garante uma altura mínima para o container */
+    display: flex;
+    align-items: center; /* Mantém o alinhamento vertical */
+}
+
+.texto-principal {
+    position: relative; /* Mantém a posição relativa para os textos internos */
+    width: 100%; /* Coloca todo o bloco de texto à frente da imagem */
+}
+
+#collectExpress_Index, #vazada {
+    font-size: clamp(60px, 13vw, 180px); /* Aumentei um pouco para mais impacto */
+    font-weight: 900;
+    margin: 0;
+    line-height: 0.85; /* VALOR < 1 JUNTA AS LINHAS. Ajuste entre 0.8 e 0.9 para o efeito desejado */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* Garante que o container do texto ocupe toda a largura */
+}
+
+/* Esta regra remove a margem dos parágrafos DENTRO dos títulos */
+#collectExpress_Index p, #vazada p {
+    margin: 0;
+    margin-left: -150px;
+}
+
+#descricao_1 p {
+    margin: 0;
+}
+
+#collectExpress_Index {
+    color: black;
+    z-index: -1;
+    margin-top: -35px;
+}
+
+#vazada {
+    color: transparent;
+    -webkit-text-stroke: 3px black; /* Ajuste a espessura do contorno se necessário */
+    z-index: 2;
+    margin-top: -35px;
+}
+
+
+#caminhao {
+    position: relative; 
+    top: 0;
+    left: 0;
+    width: auto;
+    height: 635px;
+    object-position: right;
+    z-index: 1;
+    margin-right: -115px;
+}
+
+#descricao_1 {
+    font-size: clamp(16px, 2vw, 20px); 
+    font-weight: normal;
+    text-align: left;
+    color: #5F5F5F;
+    margin-top: 20px;
+    position: relative; /* Garante que fique no fluxo normal dentro de '.texto-principal' */
+    margin-top: 20rem;
+}
+
+.btn-saiba-mais {
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: clamp(16px, 2.5vw, 20px);
+    font-weight: bold;
+    text-align: center;
+    width: auto;
+    min-width: 180px;
+    text-decoration: none;
+    color: #fff;
+    background-color: black;
+    border-radius: 50px;
+    transition: background-color 0.3s, color 0.3s;
+    margin-top: 60px;
+    margin-left: 0;
+    position: relative; /* Também precisa ser relativo para ter z-index */
+    z-index: 4;
+}
+
+.btn-saiba-mais:hover {
+    background-color: #333;
 }
 
 .oQue {
@@ -111,7 +153,7 @@
 }
 
 .collect {
-    font-weight: bold;
+    font-weight: 900;
     font-size: 44px;
     color: #676767;
     padding: 0 10px;
@@ -135,7 +177,7 @@
     font-weight: normal;
     text-align: center;
     color: #676767;
-	margin-top: 250px;
+	margin-top: 200px;
 	font-weight: bold;
 }
 
@@ -195,28 +237,28 @@
 
   
 .carousel .titulocarrossel {
-	margin-top: 20px;
-    font-size: 30px;
+	margin-top: 17px;
+    font-size: 20px;
     color: #000;
 }
   
 .carousel .conteudocarrossel {
     color: #777;
-    font-size: 14px;
-	margin-top: -15px;
+    font-size: 20px;
+	margin-top: 15px;
+    margin-bottom: 20px;
 }
 
 .titulocarrossel.active {
-	margin-top: 50px;
-    font-size: 35px;
+	margin-top: 25px;
+    font-size: 25px;
     color: #000;
 }
   
 .conteudocarrossel.active {
     color: #777;
-    font-size: 27px;
+    font-size: 19px;
 	margin-top: -15px;
-	margin-bottom: 50px;
 }
 
 .cliqueaqui {
@@ -230,9 +272,8 @@
 	height: 48px;
 	font-size: 20px;
 	font-weight: bold;
-	margin-top: -10px;
 }
-  
+
 .cliqueaqui:hover {
     background-color: #333;
 }
