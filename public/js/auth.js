@@ -1,25 +1,26 @@
 // public/js/auth.js
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // Procura o container no HTML onde as informações do usuário serão exibidas
     const userSessionContainer = document.getElementById('user-session-container');
+    const loginMenuItem = document.getElementById('login-menu-item'); // Pega o item do menu de login
 
-    // Se a página não tiver este container, o script para aqui para evitar erros.
-    if (!userSessionContainer) {
+    if (!userSessionContainer || !loginMenuItem) {
         return;
     }
 
     try {
-        // Chama a nossa API no backend para buscar as informações da sessão
         const response = await fetch('/users/api/session-info');
         const data = await response.json();
 
         if (data.loggedIn) {
-            // Se a resposta for 'loggedIn: true', o usuário está logado.
+            // Usuário está LOGADO
             const usuario = data.usuario;
-            const perfilUrl = usuario.tipo === 'cacambeiro' ? '/perfilcacambeiro.html' : '/perfilcliente.html';
+            const perfilUrl = usuario.tipo_usuario === 'cacambeiro' ? '/perfilcacambeiro.html' : '/perfilcliente.html';
 
-            // Cria o HTML de "boas-vindas" e o insere no container
+            // Esconde o botão de "Login" do menu
+            loginMenuItem.style.display = 'none';
+
+            // Cria o HTML de "boas-vindas" com os links de perfil e sair
             userSessionContainer.innerHTML = `
                 <div class="perfil-sair">
                     <span>Bem-vindo,<br> ${usuario.nome}</span>
@@ -32,11 +33,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
             `;
         } else {
-            // Se 'loggedIn' for false, mostra um botão de Login.
-            userSessionContainer.innerHTML = `<a style="display:none"></a>`;
+            // Usuário NÃO está logado
+            // Garante que o container de sessão esteja vazio e o botão de login visível
+            userSessionContainer.innerHTML = '';
+            loginMenuItem.style.display = 'list-item';
         }
     } catch (error) {
         console.error('Erro ao buscar dados da sessão:', error);
-        // Em caso de erro de comunicação, mostra o botão de login como fallback.
+        userSessionContainer.innerHTML = '';
+        loginMenuItem.style.display = 'list-item';
     }
 });
