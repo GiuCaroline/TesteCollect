@@ -37,7 +37,6 @@ router.post('/login', async (req, res) => {
             });
         }
 
-        // <-- NOVO: CRIAÇÃO DA SESSÃO -->
         // Se a senha está correta, criamos a sessão para o usuário.
         // O `req.session` é fornecido pelo middleware `express-session` configurado no server.js
         req.session.usuario = {
@@ -80,8 +79,11 @@ router.get('/api/session-info', (req, res) => {
     if (req.session.usuario) {
         // Usuário está logado, enviamos seus dados em um formato padronizado
         res.json({
-            loggedIn: true,
-            usuario: req.session.usuario
+            id: usuario.id_usuario,
+            nome: usuario.nome,
+            email: usuario.email,
+            tipo_usuario: usuario.tipo
+
         });
     } else {
         // Ninguém logado
@@ -112,7 +114,7 @@ router.get('/logout', (req, res) => {
         res.redirect('/login.html'); // Redireciona o usuário para a página de login
     });
 });
-// <-- FIM DAS NOVAS ROTAS -->
+
 
 
 module.exports = router;
