@@ -33,11 +33,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             `;
         } else {
             // Se 'loggedIn' for false, mostra um botão de Login.
-            userSessionContainer.innerHTML = `<a href="/login.html" class="login-button">Login</a>`;
+            userSessionContainer.innerHTML = `<a style="display:none"></a>`;
         }
     } catch (error) {
         console.error('Erro ao buscar dados da sessão:', error);
         // Em caso de erro de comunicação, mostra o botão de login como fallback.
-        userSessionContainer.innerHTML = `<a href="/login.html" class="login-button">Login</a>`;
     }
 });
