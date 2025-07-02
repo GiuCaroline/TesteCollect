@@ -2,10 +2,10 @@
 
 const express = require('express');
 const router = express.Router();
-const db = require('../db'); 
+const supabase = require('../db'); // Sua conexão, que é um cliente Supabase
 const bcrypt = require('bcrypt');
 
-// Rota de Login (Não alterada, apenas para contexto)
+// --- ROTA DE LOGIN CORRIGIDA ---
 router.post('/login', async (req, res) => {
     const { email, senha } = req.body;
 
@@ -14,21 +14,25 @@ router.post('/login', async (req, res) => {
     }
 
     try {
-        // Usando a instância 'pool' exportada de db.js
-        const result = await db.query('SELECT * FROM tb_usuario WHERE email = $1', [email]);
-        
-        if (result.rows.length === 0) {
+        // **LÓGICA DE BUSCA RESTAURADA PARA A SINTAXE ORIGINAL DO SUPABASE**
+        const { data: users, error } = await supabase
+            .from('tb_usuario') // Corrigindo para o nome correto da tabela: tb_usuario
+            .select('*')
+            .eq('email', email);
+
+        if (error || !users || users.length === 0) {
+            console.error('Erro ao buscar usuário ou usuário não encontrado:', error);
             return res.status(401).json({ error: 'E-mail ou senha inválidos.' });
         }
 
-        const user = result.rows[0];
+        const user = users[0];
         const senhaCorreta = await bcrypt.compare(senha, user.senha);
 
         if (!senhaCorreta) {
             return res.status(401).json({ error: 'E-mail ou senha inválidos.' });
         }
 
-        // Sessão é criada com os dados do usuário
+        // **LÓGICA DE SESSÃO MANTIDA (ESSA PARTE ESTÁ CORRETA)**
         req.session.usuario = {
             id: user.id_usuario,
             nome: user.nome,
@@ -38,6 +42,7 @@ router.post('/login', async (req, res) => {
 
         console.log('Sessão criada para:', req.session.usuario);
 
+        // Retorna a mensagem de sucesso e os dados do usuário
         res.status(200).json({
             message: 'Login bem-sucedido!',
             user: {
@@ -54,22 +59,15 @@ router.post('/login', async (req, res) => {
     }
 });
 
-// --- ROTA DE SESSÃO CORRIGIDA ---
-/*
- * Documentação:
- * Rota: GET /users/api/session-info
- * O frontend (auth.js) chama esta rota para verificar se há um usuário logado.
- * Se `req.session.usuario` existir, devolvemos os dados no formato que o frontend espera.
-*/
+
+// Rota para verificar a sessão (não alterada, já está correta)
 router.get('/api/session-info', (req, res) => {
     if (req.session.usuario) {
-        // Usuário está logado, enviamos os dados com a flag 'loggedIn: true'
         res.json({
             loggedIn: true,
-            usuario: req.session.usuario // Enviando o objeto de usuário completo
+            usuario: req.session.usuario
         });
     } else {
-        // Ninguém logado
         res.json({
             loggedIn: false
         });
@@ -77,21 +75,13 @@ router.get('/api/session-info', (req, res) => {
 });
 
 
-// --- ROTA DE LOGOUT CORRIGIDA ---
-/*
- * Documentação:
- * Rota: GET /users/logout
- * O link "Sair" aponta para esta rota.
- * Ela destrói a sessão e redireciona para a página de login.
-*/
+// Rota de logout (não alterada, já está correta)
 router.get('/logout', (req, res) => {
     req.session.destroy(err => {
         if (err) {
             console.error('Erro ao fazer logout:', err);
             return res.status(500).send('Não foi possível fazer logout.');
         }
-
-        // Limpa o cookie do navegador e redireciona
         res.clearCookie('connect.sid'); 
         res.redirect('/login.html'); 
     });
